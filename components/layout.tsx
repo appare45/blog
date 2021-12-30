@@ -39,6 +39,9 @@ export default function Layout(props: React.PropsWithChildren<layoutProps>) {
         />
 
         <title>{props.pageTitle}</title>
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@appare45" />
+        <meta name="twitter:creator" content="@appare45" />
       </Head>
       <header className="flex items-center flex-col">
         {props.isHome ? (
