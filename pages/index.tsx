@@ -2,23 +2,29 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import { getSortedPostsData, postMetaData } from "../lib/posts";
 import { Date } from "../components/date";
-import Layout, { name, siteTitle } from "../components/layout";
+import Layout, { id, name, siteTitle } from "../components/layout";
 import { Heading, Link } from "../components/util";
 import { GitHubRepos } from "../components/githubRepos";
+import { fetchGithubRepo, repo } from "../lib/github";
 
 export const getStaticProps: GetStaticProps = async () => {
   const allPostsData = getSortedPostsData();
+  const githubRepos = await fetchGithubRepo(id);
   return {
     props: {
       allPostsData,
+      githubRepos,
     },
+    revalidate: 1000000,
   };
 };
 
 export default function Home({
   allPostsData,
+  githubRepos,
 }: {
   allPostsData: postMetaData[];
+  githubRepos: repo[];
 }) {
   return (
     <Layout isHome pageTitle={siteTitle}>
@@ -54,7 +60,7 @@ export default function Home({
       </section>
       <section>
         <Heading level={2}>Repositories</Heading>
-        <GitHubRepos id="appare45" />
+        <GitHubRepos data={githubRepos} />
       </section>
     </Layout>
   );

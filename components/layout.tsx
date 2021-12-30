@@ -5,6 +5,7 @@ import { Heading, Link } from "./util";
 
 export const name = "appare";
 export const siteTitle = "appare";
+export const id = "appare45";
 
 interface layoutProps {
   pageTitle: string;

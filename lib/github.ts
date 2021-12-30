@@ -12,7 +12,7 @@ export interface repo {
   updated_at: string;
 }
 
-export const fetchGithubRepos: Fetcher<repo[]> = async (id: string) => {
+export const fetchGithubRepo = async (id: string): Promise<repo[]> => {
   const url = `https://api.github.com/users/${id}/repos`;
   const res = await axios.get<repo[]>(url, {
     params: {

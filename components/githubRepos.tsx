@@ -1,15 +1,10 @@
 import useSWR from "swr";
-import { fetchGithubRepos, repo } from "../lib/github";
+import { repo } from "../lib/github";
 import { Date } from "./date";
+import { id } from "./layout";
 import { Link } from "./util";
 
-export function GitHubRepos({ id }: { id: string }) {
-  const { data, error } = useSWR<repo[]>(id, fetchGithubRepos, {
-    refreshInterval: 100000,
-  });
-  console.log(data);
-  if (error) return <div>Failed to load</div>;
-  if (!data) return <div>loading...</div>;
+export function GitHubRepos({ data }: { data: repo[] }) {
   return (
     <div>
       <ul>
