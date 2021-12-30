@@ -33,8 +33,12 @@ export default function Layout(props: React.PropsWithChildren<layoutProps>) {
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
         <meta name="og:title" content={props.pageTitle} />
+        <meta
+          property="og:image"
+          content="https://appare45.com/images/profile.jpg"
+        />
+
         <title>{props.pageTitle}</title>
-        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <header className="flex items-center flex-col">
         {props.isHome ? (
