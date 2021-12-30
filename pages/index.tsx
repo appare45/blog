@@ -15,7 +15,7 @@ export const getStaticProps: GetStaticProps = async () => {
       allPostsData,
       githubRepos,
     },
-    revalidate: 1000000,
+    revalidate: 100000,
   };
 };
 
