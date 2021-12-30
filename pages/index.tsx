@@ -26,6 +26,14 @@ export default function Home({
       </Head>
       <section className="p-1">
         <p>(EK71K/高2) React/typescript/Firebase</p>
+        <ul>
+          <li>
+            <Link href="https://twitter.com/appare45">Twitter</Link>
+          </li>
+          <li>
+            <Link href="https://github.com/appare45">GitHub</Link>
+          </li>
+        </ul>
       </section>
       <section>
         <ul>
