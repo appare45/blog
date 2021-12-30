@@ -2,9 +2,9 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import ReactMarkdown from "react-markdown";
 import { getAllPostIds, getPostData } from "../../lib/posts";
 import type { postData } from "../../lib/posts";
-import Layout from "../components/layout";
-import { Date } from "../components/date";
-import { Heading } from "../components/util";
+import Layout from "../../components/layout";
+import { Date } from "../../components/date";
+import { Heading } from "../../components/util";
 
 export default function Post({ postData }: { postData: postData }) {
   return (

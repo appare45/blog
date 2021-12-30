@@ -1,9 +1,9 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import { getSortedPostsData, postMetaData } from "../lib/posts";
-import { Date } from "./components/date";
-import Layout, { siteTitle } from "./components/layout";
-import { Link } from "./components/util";
+import { Date } from "../components/date";
+import Layout, { siteTitle } from "../components/layout";
+import { Heading, Link } from "../components/util";
 
 export const getStaticProps: GetStaticProps = async () => {
   const allPostsData = getSortedPostsData();
@@ -26,6 +26,8 @@ export default function Home({
       </Head>
       <section className="p-1">
         <p>(EK71K/高2) React/typescript/Firebase</p>
+      </section>
+      <section className="my-3">
         <ul>
           <li>
             <Link href="https://twitter.com/appare45">Twitter</Link>
@@ -36,6 +38,7 @@ export default function Home({
         </ul>
       </section>
       <section>
+        <Heading level={2}>Blog</Heading>
         <ul>
           {allPostsData.map(({ id, title, date }) => (
             <li key="id">
