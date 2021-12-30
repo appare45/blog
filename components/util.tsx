@@ -34,12 +34,18 @@ export function Heading(props: React.PropsWithChildren<headingProps>) {
 
 interface linkProps extends LinkProps {
   className?: string;
+  new_tab?: boolean;
 }
 
 export function Link(props: React.PropsWithChildren<linkProps>) {
   return (
     <NextLink prefetch={false} href={props.href}>
-      <a className="text-blue-700 hover:underline">{props.children}</a>
+      <a
+        className={`text-blue-700 hover:underline${props.className}`}
+        target={props.new_tab ? "_blank" : "_self"}
+      >
+        {props.children}
+      </a>
     </NextLink>
   );
 }

@@ -13,7 +13,7 @@ export function GitHubRepos({ data }: { data: repo[] }) {
             <li key={repo.id} className="mb-1">
               <Link href={repo.html_url}>{repo.name}</Link>
               <br />
-              <div className="flex items-center">
+              <div className="flex items-center text-gray-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-3 w-3 mr-1"
@@ -50,7 +50,6 @@ export function GitHubRepos({ data }: { data: repo[] }) {
             </li>
           ))}
       </ul>
-      <Link href={"https://github.com/" + id}>more on github→</Link>
     </div>
   );
 }

@@ -6,25 +6,33 @@ import Layout, { id, name, siteTitle } from "../components/layout";
 import { Heading, Link } from "../components/util";
 import { GitHubRepos } from "../components/githubRepos";
 import { fetchGithubRepo, repo } from "../lib/github";
+import { getTweets, tweet } from "../lib/tweets";
+import { Tweets } from "../components/tweet";
+
+const twitterUserId = "1021707116573155329";
 
 export const getStaticProps: GetStaticProps = async () => {
   const allPostsData = getSortedPostsData();
   const githubRepos = await fetchGithubRepo(id);
+  const tweets = await getTweets(twitterUserId);
   return {
     props: {
       allPostsData,
       githubRepos,
+      tweets,
     },
-    revalidate: 100000,
+    revalidate: 100,
   };
 };
 
 export default function Home({
   allPostsData,
   githubRepos,
+  tweets,
 }: {
   allPostsData: postMetaData[];
   githubRepos: repo[];
+  tweets: tweet[];
 }) {
   return (
     <Layout isHome pageTitle={siteTitle}>
@@ -61,6 +69,12 @@ export default function Home({
       <section>
         <Heading level={2}>Repositories</Heading>
         <GitHubRepos data={githubRepos} />
+        <Link href={"https://github.com/" + id}>more on github→</Link>
+      </section>
+      <section>
+        <Heading level={2}>Tweets</Heading>
+        <Tweets data={tweets} />
+        <Link href={"https://twitter.com/" + id}>more on twitter→</Link>
       </section>
     </Layout>
   );
