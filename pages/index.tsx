@@ -69,12 +69,16 @@ export default function Home({
       <section>
         <Heading level={2}>Repositories</Heading>
         <GitHubRepos data={githubRepos} />
-        <Link href={"https://github.com/" + id}>more on github→</Link>
+        <Link href={"https://github.com/" + id} new_tab>
+          more on github→
+        </Link>
       </section>
       <section>
         <Heading level={2}>Tweets</Heading>
         <Tweets data={tweets} />
-        <Link href={"https://twitter.com/" + id}>more on twitter→</Link>
+        <Link href={"https://twitter.com/" + id} new_tab>
+          more on twitter→
+        </Link>
       </section>
     </Layout>
   );
