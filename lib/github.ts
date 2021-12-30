@@ -1,4 +1,3 @@
-import { Fetcher } from "swr";
 import axios from "axios";
 
 export interface repo {

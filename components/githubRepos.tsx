@@ -1,4 +1,3 @@
-import useSWR from "swr";
 import { repo } from "../lib/github";
 import { Date } from "./date";
 import { id } from "./layout";
