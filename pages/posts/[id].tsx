@@ -50,6 +50,9 @@ export default function Post({ postData }: { postData: postData }) {
                 return <p>Error</p>;
               }
             },
+            ul({ children }) {
+              return <li className="list-disc">{children}</li>;
+            },
           }}
         >
           {postData.content}
