@@ -14,7 +14,7 @@ interface layoutProps {
 
 export default function Layout(props: React.PropsWithChildren<layoutProps>) {
   return (
-    <div className="max-w-3xl px-0 py-1 mt-6 mb-6 mx-auto">
+    <div className="max-w-3xl py-1 px-5 mt-6 mb-6 mx-auto">
       <Head>
         <link
           rel="icon"
