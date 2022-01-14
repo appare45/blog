@@ -14,5 +14,7 @@ Next.jsを使ってわずか2日で作りました。
 
 今後ともよろしくおねがいします。
 
+contact: [bafi477@heisei.be](mailto:bafi477@heisei.be)
+
 ![My Profile Page](/images/appare45-top.webp)
 ![My Profile Image](/images/profile.jpg)
