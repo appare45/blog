@@ -1,25 +1,29 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import { getSortedPostsData, postMetaData } from "../lib/posts";
-import { Date } from "../components/date";
-import Layout, { id, name, siteTitle } from "../components/layout";
+import Layout, { id, siteTitle } from "../components/layout";
 import { Heading, Link } from "../components/util";
 import { GitHubRepos } from "../components/githubRepos";
 import { fetchGithubRepo, repo } from "../lib/github";
 import { getTweets, tweet } from "../lib/tweets";
 import { Tweets } from "../components/tweet";
+import { postsData, PostsList } from "../components/postsList";
+import { fetchZennFeed } from "../lib/zenn";
 
 const twitterUserId = "1021707116573155329";
+const zennUserId = "appare45";
 
 export const getStaticProps: GetStaticProps = async () => {
   const allPostsData = getSortedPostsData();
   const githubRepos = await fetchGithubRepo(id);
   const tweets = await getTweets(twitterUserId);
+  const zennArticles = await fetchZennFeed(zennUserId);
   return {
     props: {
       allPostsData,
       githubRepos,
       tweets,
+      zennArticles,
     },
     revalidate: 100,
   };
@@ -29,10 +33,12 @@ export default function Home({
   allPostsData,
   githubRepos,
   tweets,
+  zennArticles,
 }: {
   allPostsData: postMetaData[];
   githubRepos: repo[];
   tweets: tweet[];
+  zennArticles: postsData[];
 }) {
   return (
     <Layout isHome pageTitle={siteTitle}>
@@ -54,17 +60,17 @@ export default function Home({
       </section>
       <section>
         <Heading level={2}>Blog</Heading>
-        <ul>
-          {allPostsData.map(({ id, title, date }) => (
-            <li key="id">
-              <Link href={`/posts/${id}`}>{title}</Link>
-              <br />
-              <small className="text-gray-600">
-                <Date dateString={date} />
-              </small>
-            </li>
-          ))}
-        </ul>
+        <PostsList
+          allPostsData={allPostsData.map((e) => ({
+            url: `/posts/${e.id}`,
+            title: e.title,
+            date: e.date,
+          }))}
+        />
+      </section>
+      <section>
+        <Heading level={2}>Tech Article</Heading>
+        <PostsList allPostsData={zennArticles} />
       </section>
       <section>
         <Heading level={2}>Repositories</Heading>
