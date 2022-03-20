@@ -4,4 +4,8 @@ export const pageView = (url: string) => {
   (window as any).gtag("config", GA_TRACKING_ID, {
     page_path: url,
   });
+  (window as any).dataLayer.push({
+    event: "pageview",
+    page: url,
+  });
 };
