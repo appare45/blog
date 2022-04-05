@@ -34,7 +34,6 @@ export default function Post({ postData }: { postData: postData }) {
                     width={1920}
                     height={1080}
                     objectFit="scale-down"
-                    // placeholder="blur"
                   />
                 );
               } else {
