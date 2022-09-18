@@ -49,12 +49,12 @@ export default function Layout(props: React.PropsWithChildren<layoutProps>) {
             <Image
               priority
               src="/images/profile.jpg"
-              className="rounded-full"
+              className="rounded-full mr-3"
               height={120}
               width={120}
               alt={name}
             />
-            <Heading level={1} className="mx-5">{name}</Heading>
+            <Heading level={1}>{name}</Heading>
           </>
         ) : (
           <>
