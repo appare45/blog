@@ -43,18 +43,18 @@ export default function Layout(props: React.PropsWithChildren<layoutProps>) {
         <meta name="twitter:site" content="@appare45" />
         <meta name="twitter:creator" content="@appare45" />
       </Head>
-      <header className="flex items-center flex-col">
+      <header className="flex items-baseline">
         {props.isHome ? (
           <>
             <Image
               priority
               src="/images/profile.jpg"
               className="rounded-full"
-              height={144}
-              width={144}
+              height={120}
+              width={120}
               alt={name}
             />
-            <Heading level={1}>{name}</Heading>
+            <Heading level={1} className="mx-5">{name}</Heading>
           </>
         ) : (
           <>
@@ -68,7 +68,7 @@ export default function Layout(props: React.PropsWithChildren<layoutProps>) {
               />
             </Link>
             <Heading level={2}>
-              <Link href="/" className="text-inherit">
+              <Link href="/" className="text-inherit mx-5">
                 {name}
               </Link>
             </Heading>

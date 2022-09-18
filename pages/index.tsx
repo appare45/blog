@@ -45,9 +45,6 @@ export default function Home({
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <section className="p-1">
-        <p>(EK71K/高2) React/typescript/Firebase</p>
-      </section>
       <section className="my-3">
         <ul>
           <li>
@@ -55,6 +52,9 @@ export default function Home({
           </li>
           <li>
             <Link href="https://github.com/appare45">GitHub</Link>
+          </li>
+          <li>
+            <Link href="contact">Contact</Link>
           </li>
         </ul>
       </section>
