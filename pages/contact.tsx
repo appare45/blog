@@ -12,7 +12,7 @@ export default function Contact() {
       <Heading level={2}>Contact</Heading>
       <p>ご連絡はこちらから</p>
       <form
-        action="https://script.google.com/macros/s/AKfycbwZvhAvNzQ_crWcTqkt19rhZHKDQLPL2bQrAa1FDgTWucUBmv7CzxztKCokRQ6m1WEh/exec"
+        action="https://script.google.com/macros/s/AKfycbzvo-v-VRbCwLMhf0Dqg5VMk88vPnx-aZWwxAFu4sBdU6p3Q53lEV4t9ugxuxuzuC0D/exec"
         acceptCharset="utf-8"
         method="post"
         target="_blank"
