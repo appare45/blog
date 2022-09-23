@@ -11,9 +11,12 @@ export default function handler(
 ) {
   // validate request
   if (
-    !allowedHost.includes(new URL(request.headers.referer ?? "").hostname) &&
-    request.headers["content-type"] == "application/x-www-form-urlencoded"
+    allowedHost.includes(new URL(request.headers.referer ?? "").hostname) &&
+    request.headers["content-type"] == "application/x-www-form-urlencoded" &&
+    request.body["h-captcha-response"] &&
+    request.body["g-recaptcha-response"]
   ) {
+    console.info(request.body);
     response.redirect("/contact/success");
   } else {
     response.redirect("/contact/fail");

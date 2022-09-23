@@ -41,7 +41,7 @@ export default function Contact() {
           </label>
           <div
             className="h-captcha"
-            data-sitekey="b0b8c71c-7e65-4b8a-b11b-c52f1a77ad5b"
+            data-sitekey="4d274fdf-11f9-4d67-935b-3c82b7830437"
           />
         </div>
         <div className="flex space-x-3">
