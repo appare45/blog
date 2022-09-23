@@ -1,14 +1,23 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+const allowedHost =
+  process.env.NODE_ENV == "development"
+    ? ["localhost", "0.0.0.0"]
+    : ["appare45.com", "blog-appare45.vercel.app"];
+
 export default function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  console.info(request.body);
-  console.info(request.headers.location);
-  console.info(request.headers.host);
-  console.table(request.headers);
-  response.redirect("/contact/success");
+  // validate request
+  if (
+    !allowedHost.includes(new URL(request.headers.referer ?? "").hostname) &&
+    request.headers["content-type"] == "application/x-www-form-urlencoded"
+  ) {
+    response.redirect("/contact/success");
+  } else {
+    response.redirect("/contact/fail");
+  }
 }
 
 export const config = {

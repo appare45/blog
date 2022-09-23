@@ -16,7 +16,6 @@ export default function Contact() {
         action="/api/contact"
         acceptCharset="utf-8"
         method="post"
-        encType="multipart/form-data"
         id="contact-form"
       >
         <div className="flex flex-col space-y-1 py-1">
