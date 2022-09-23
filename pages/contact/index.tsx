@@ -1,7 +1,8 @@
 import Head from "next/head";
 import Script from "next/script";
-import Layout, { siteTitle } from "../components/layout";
-import { Heading, Link } from "../components/util";
+import { useMemo, useState } from "react";
+import Layout, { siteTitle } from "../../components/layout";
+import { Heading, Link } from "../../components/util";
 
 export default function Contact() {
   return (
@@ -12,10 +13,9 @@ export default function Contact() {
       <Heading level={2}>Contact</Heading>
       <p>ご連絡はこちらから</p>
       <form
-        action="https://script.google.com/macros/s/AKfycbzvo-v-VRbCwLMhf0Dqg5VMk88vPnx-aZWwxAFu4sBdU6p3Q53lEV4t9ugxuxuzuC0D/exec"
+        action="/api/contact"
         acceptCharset="utf-8"
         method="post"
-        target="_blank"
         encType="multipart/form-data"
         id="contact-form"
       >
