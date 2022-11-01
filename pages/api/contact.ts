@@ -20,19 +20,15 @@ export default async function handler(
     request.body["g-recaptcha-response"] &&
     request.body["text"]
   ) {
-    const hCaptchaRequestBody = {
-      secret: process.env.HCAPTCHA_API_KEY,
-      response: request.body["h-captcha-response"],
-    };
     const hCaptchaData = await axios.post(
       hCaptchaVerifyUrl,
-      hCaptchaRequestBody,
+      `response=${request.body["h-captcha-response"]}&secret=${process.env.HCAPTCHA_API_KEY}`,
       {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       }
     );
     console.log(hCaptchaData);
-    if (hCaptchaData.status == 202 && JSON.parse(hCaptchaData.data)["success"])
+    if (hCaptchaData.status == 200 && hCaptchaData.data["success"])
       response.redirect("/contact/success");
     else response.redirect("/contact/fail");
   } else {
