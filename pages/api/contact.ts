@@ -20,17 +20,22 @@ export default async function handler(
     request.body["g-recaptcha-response"] &&
     request.body["text"]
   ) {
-    const hCaptchaData = await axios.post(
-      hCaptchaVerifyUrl,
-      `response=${request.body["h-captcha-response"]}&secret=${process.env.HCAPTCHA_API_KEY}`,
-      {
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      }
-    );
-    console.log(hCaptchaData);
-    if (hCaptchaData.status == 200 && hCaptchaData.data["success"])
-      response.redirect("/contact/success");
-    else response.redirect("/contact/fail");
+    axios
+      .post(
+        hCaptchaVerifyUrl,
+        `response=${request.body["h-captcha-response"]}&secret=${process.env.HCAPTCHA_API_KEY}`,
+        {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        }
+      )
+      .catch((e) => {
+        response.redirect("/contact/fail");
+      })
+      .then((hCaptchaData) => {
+        if (hCaptchaData?.status == 200 && hCaptchaData.data["success"])
+          response.redirect("/contact/success");
+        else response.redirect("/contact/fail");
+      });
   } else {
     response.redirect("/contact/fail");
   }
