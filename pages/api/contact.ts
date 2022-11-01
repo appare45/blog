@@ -2,16 +2,22 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 
 const hCaptchaVerifyUrl = "https://hcaptcha.com/siteverify";
-
+const contactApiUrl = process.env.CONTACT_API_URL;
 const allowedHost =
   process.env.NODE_ENV == "development"
     ? ["localhost", "0.0.0.0"]
     : ["appare45.com", "blog-appare45.vercel.app"];
 
+interface contactData {
+  text: string;
+  email?: string;
+}
+
 export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
+  let isRequestSucceed = false;
   // validate request
   if (
     allowedHost.includes(new URL(request.headers.referer ?? "").hostname) &&
@@ -28,17 +34,30 @@ export default async function handler(
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         }
       )
-      .catch((e) => {
-        response.redirect("/contact/fail");
-      })
       .then((hCaptchaData) => {
-        if (hCaptchaData?.status == 200 && hCaptchaData.data["success"])
-          response.redirect("/contact/success");
-        else response.redirect("/contact/fail");
+        if (hCaptchaData?.status == 200 && hCaptchaData.data["success"]) {
+          sendDataToContactApi({
+            text: request.body["text"],
+            email: request.body["email"],
+          }).then(() => {
+            console.info("rec");
+            isRequestSucceed = true;
+          });
+        }
       });
-  } else {
-    response.redirect("/contact/fail");
   }
+  if (isRequestSucceed) response.redirect("/contact/success");
+  else response.redirect("/contact/fail");
+}
+
+async function sendDataToContactApi(contactData: contactData) {
+  console.info(contactData);
+  if (contactApiUrl) {
+    return axios.post(
+      contactApiUrl,
+      `text=${contactData.text}&email=${contactData.email}`
+    );
+  } else return null;
 }
 
 export const config = {
