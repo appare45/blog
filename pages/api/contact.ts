@@ -3,6 +3,7 @@ import axios from "axios";
 
 const hCaptchaVerifyUrl = "https://hcaptcha.com/siteverify";
 const contactApiUrl = process.env.CONTACT_API_URL;
+const lineApiToken = process.env.LINE_API_TOKEN;
 const allowedHost =
   process.env.NODE_ENV == "development"
     ? ["localhost", "0.0.0.0"]
@@ -26,36 +27,54 @@ export default async function handler(
     request.body["g-recaptcha-response"] &&
     request.body["text"]
   ) {
-    axios
-      .post(
+    try {
+      const hCaptchaData = await axios.post(
         hCaptchaVerifyUrl,
         `response=${request.body["h-captcha-response"]}&secret=${process.env.HCAPTCHA_API_KEY}`,
         {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         }
-      )
-      .then((hCaptchaData) => {
-        if (hCaptchaData?.status == 200 && hCaptchaData.data["success"]) {
+      );
+      if (hCaptchaData?.status == 200 && hCaptchaData.data["success"]) {
+        try {
           sendDataToContactApi({
             text: request.body["text"],
             email: request.body["email"],
-          }).then(() => {
-            console.info("rec");
-            isRequestSucceed = true;
           });
+          isRequestSucceed = true;
+          response.redirect("/contact/success");
+        } catch {
+          console.error("Unable to record contact request");
         }
-      });
+      }
+    } catch {
+      console.log("Unable to verify hCaptcha");
+    }
   }
-  if (isRequestSucceed) response.redirect("/contact/success");
-  else response.redirect("/contact/fail");
+  if (!isRequestSucceed) response.redirect("/contact/fail");
 }
 
 async function sendDataToContactApi(contactData: contactData) {
   console.info(contactData);
+  try {
+    axios.post(
+      "https://notify-api.line.me/api/notify",
+      `message=
+      ${contactData.text} by ${contactData.email}
+    `,
+      {
+        headers: {
+          Authorization: `Bearer ${lineApiToken}`,
+        },
+      }
+    );
+  } catch {
+    console.log("Couldn't notify to LINE");
+  }
   if (contactApiUrl) {
     return axios.post(
       contactApiUrl,
-      `text=${contactData.text}&email=${contactData.email}`
+      `text=${encodeURIComponent(contactData.text)}&email=${contactData.email}`
     );
   } else return null;
 }
