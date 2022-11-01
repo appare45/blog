@@ -18,7 +18,9 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  let isRequestSucceed = false;
+  const requestFailed = () => {
+    response.redirect("/contact/fail");
+  };
   // validate request
   if (
     allowedHost.includes(new URL(request.headers.referer ?? "").hostname) &&
@@ -41,17 +43,21 @@ export default async function handler(
             text: request.body["text"],
             email: request.body["email"],
           });
-          isRequestSucceed = true;
           response.redirect("/contact/success");
         } catch {
           console.error("Unable to record contact request");
+          requestFailed();
         }
+      } else {
+        requestFailed();
       }
     } catch {
       console.log("Unable to verify hCaptcha");
+      requestFailed();
     }
+  } else {
+    requestFailed();
   }
-  if (!isRequestSucceed) response.redirect("/contact/fail");
 }
 
 async function sendDataToContactApi(contactData: contactData) {
