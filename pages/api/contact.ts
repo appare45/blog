@@ -30,16 +30,19 @@ export default async function handler(
     request.body["text"]
   ) {
     try {
-      const hCaptchaData = await axios.post(
+      const hCaptchaData = axios.post(
         hCaptchaVerifyUrl,
         `response=${request.body["h-captcha-response"]}&secret=${process.env.HCAPTCHA_API_KEY}`,
         {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         }
       );
-      if (hCaptchaData?.status == 200 && hCaptchaData.data["success"]) {
+      if (
+        (await hCaptchaData)?.status == 200 &&
+        (await hCaptchaData).data["success"]
+      ) {
         try {
-          sendDataToContactApi({
+          await sendDataToContactApi({
             text: request.body["text"],
             email: request.body["email"],
           });
