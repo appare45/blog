@@ -19,7 +19,7 @@ export default async function handler(
   response: NextApiResponse
 ) {
   const requestFailed = () => {
-    response.redirect("/contact/fail");
+    response.redirect(302, "/contact/fail");
   };
   // validate request
   if (
@@ -46,7 +46,7 @@ export default async function handler(
             text: request.body["text"],
             email: request.body["email"],
           });
-          response.redirect("/contact/success");
+          response.redirect(302, "/contact/success");
         } catch {
           console.error("Unable to record contact request");
           requestFailed();
