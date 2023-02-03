@@ -39,12 +39,12 @@ export default function Contact() {
               className="border invalid:border-red-50 w-full p-1 font-mono"
             />
           </label>
+        </div>
+        <div className="flex space-x-3">
           <div
             className="cf-turnstile"
             data-sitekey="0x4AAAAAAACTKjRsGDfe8G9p"
           />
-        </div>
-        <div className="flex space-x-3">
           <button
             className=" bg-blue-600 text-white px-3 leading-7 rounded hover:bg-blue-700 "
             type="submit"

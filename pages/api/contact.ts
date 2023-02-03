@@ -22,6 +22,7 @@ export default async function handler(
   const requestFailed = () => {
     response.redirect(302, "/contact/fail");
   };
+  console.table(request.headers);
   // validate request
   if (
     allowedHost.includes(new URL(request.headers.referer ?? "").hostname) &&
@@ -38,6 +39,7 @@ export default async function handler(
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         }
       );
+      console.table(await verifyData);
       if (
         (await verifyData)?.status == 200 &&
         (await verifyData).data["success"]
@@ -53,6 +55,7 @@ export default async function handler(
           requestFailed();
         }
       } else {
+        console.log("Challenge failed");
         requestFailed();
       }
     } catch {
@@ -60,6 +63,7 @@ export default async function handler(
       requestFailed();
     }
   } else {
+    console.log("Invalid request from contact");
     requestFailed();
   }
 }
