@@ -40,15 +40,11 @@ export default function Contact() {
             />
           </label>
           <div
-            className="h-captcha"
-            data-sitekey="4d274fdf-11f9-4d67-935b-3c82b7830437"
+            className="cf-turnstile"
+            data-sitekey="0x4AAAAAAACTKjRsGDfe8G9p"
           />
         </div>
         <div className="flex space-x-3">
-          <Script
-            src="https://js.hcaptcha.com/1/api.js"
-            strategy="lazyOnload"
-          />
           <button
             className=" bg-blue-600 text-white px-3 leading-7 rounded hover:bg-blue-700 "
             type="submit"
@@ -62,6 +58,7 @@ export default function Contact() {
             リセット
           </button>
         </div>
+        <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" />
       </form>
       <p>個人情報を入力しないでください</p>
     </Layout>

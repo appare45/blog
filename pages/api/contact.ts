@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 
-const hCaptchaVerifyUrl = "https://hcaptcha.com/siteverify";
+const siteVerifyUrl =
+  "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 const contactApiUrl = process.env.CONTACT_API_URL;
 const lineApiToken = process.env.LINE_API_TOKEN;
 const allowedHost =
@@ -25,21 +26,21 @@ export default async function handler(
   if (
     allowedHost.includes(new URL(request.headers.referer ?? "").hostname) &&
     request.headers["content-type"] == "application/x-www-form-urlencoded" &&
-    request.body["h-captcha-response"] &&
-    request.body["g-recaptcha-response"] &&
+    request.headers["CF-Connecting-IP"] &&
+    request.body["cf-turnstile-response"] &&
     request.body["text"]
   ) {
     try {
-      const hCaptchaData = axios.post(
-        hCaptchaVerifyUrl,
-        `response=${request.body["h-captcha-response"]}&secret=${process.env.HCAPTCHA_API_KEY}`,
+      const verifyData = axios.post(
+        siteVerifyUrl,
+        `response=${request.body["cf-turnstile-response"]}&secret=${process.env.VERIFY_API_KEY}&remoteip=${request.headers["CF-Connecting-IP"]}`,
         {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         }
       );
       if (
-        (await hCaptchaData)?.status == 200 &&
-        (await hCaptchaData).data["success"]
+        (await verifyData)?.status == 200 &&
+        (await verifyData).data["success"]
       ) {
         try {
           await sendDataToContactApi({
