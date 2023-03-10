@@ -23,18 +23,19 @@ export default async function handler(
     response.redirect(302, "/contact/fail");
   };
   console.table(request.headers);
+  console.table(request.body);
   // validate request
   if (
     allowedHost.includes(new URL(request.headers.referer ?? "").hostname) &&
     request.headers["content-type"] == "application/x-www-form-urlencoded" &&
-    request.headers["CF-Connecting-IP"] &&
+    request.headers["x-forwarded-for"] &&
     request.body["cf-turnstile-response"] &&
     request.body["text"]
   ) {
     try {
       const verifyData = axios.post(
         siteVerifyUrl,
-        `response=${request.body["cf-turnstile-response"]}&secret=${process.env.VERIFY_API_KEY}&remoteip=${request.headers["CF-Connecting-IP"]}`,
+        `response=${request.body["cf-turnstile-response"]}&secret=${process.env.VERIFY_API_KEY}&remoteip=${request.headers["x-forwarded-for"]}`,
         {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         }
