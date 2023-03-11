@@ -1,18 +1,17 @@
 import Head from "next/head";
 import React from "react";
+import { usePageInfo } from "../hooks/usePageInfo";
 import { Image } from "./media";
 import { Heading, Link } from "./util";
-
-export const name = "appare";
-export const siteTitle = "appare";
-export const id = "appare45";
 
 interface layoutProps {
   pageTitle: string;
   isHome?: boolean;
+  noIndex?: boolean;
 }
 
 export default function Layout(props: React.PropsWithChildren<layoutProps>) {
+  const { name } = usePageInfo();
   return (
     <div className="max-w-3xl py-1 px-5 mt-6 mb-6 mx-auto">
       <Head>
@@ -42,6 +41,7 @@ export default function Layout(props: React.PropsWithChildren<layoutProps>) {
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@appare45" />
         <meta name="twitter:creator" content="@appare45" />
+        {props.noIndex && <meta name="robots" content="noindex" />}
       </Head>
       <header className="flex items-baseline">
         {props.isHome ? (
@@ -49,12 +49,13 @@ export default function Layout(props: React.PropsWithChildren<layoutProps>) {
             <Image
               priority
               src="/images/profile.jpg"
-              className="rounded-full mr-3"
-              height={120}
-              width={120}
+              height={108}
+              width={108}
               alt={name}
             />
-            <Heading level={1}>{name}</Heading>
+            <Heading level={1} className="text-inherit mx-5">
+              {name}
+            </Heading>
           </>
         ) : (
           <>
@@ -75,7 +76,7 @@ export default function Layout(props: React.PropsWithChildren<layoutProps>) {
           </>
         )}
       </header>
-      <main>{props.children}</main>
+      {props.children}
       {!props.isHome && (
         <Link href="/" className="mt-3">
           ← Back to home

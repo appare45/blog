@@ -1,17 +1,19 @@
 import Head from "next/head";
 import Script from "next/script";
-import { useMemo, useState } from "react";
-import Layout, { siteTitle } from "../../components/layout";
-import { Heading, Link } from "../../components/util";
+import Layout from "../../components/layout";
+import { Heading } from "../../components/util";
+import { useLocale } from "../../hooks/useLocale";
+import { usePageInfo } from "../../hooks/usePageInfo";
 
 export default function Contact() {
+  const locale = useLocale();
+  const { siteTitle } = usePageInfo();
   return (
-    <Layout pageTitle="Contact">
+    <Layout pageTitle="Contact" noIndex>
       <Head>
         <title>Contact | {siteTitle}</title>
       </Head>
       <Heading level={2}>Contact</Heading>
-      <p>ご連絡はこちらから</p>
       <form
         action="/api/contact"
         acceptCharset="utf-8"
@@ -20,7 +22,7 @@ export default function Contact() {
       >
         <div className="flex flex-col space-y-1 py-1">
           <label>
-            内容
+            {locale.t.message}
             <textarea
               name="text"
               id="text"
@@ -31,7 +33,7 @@ export default function Contact() {
             />
           </label>
           <label>
-            メールアドレス（返信が必要な場合）
+            {locale.t.email} {locale.t.option}
             <input
               type="email"
               id="email"
@@ -41,26 +43,26 @@ export default function Contact() {
           </label>
         </div>
         <div className="flex space-x-3">
-          <div
-            className="cf-turnstile"
-            data-sitekey="0x4AAAAAAACTKjRsGDfe8G9p"
-          />
           <button
             className=" bg-blue-600 text-white px-3 leading-7 rounded hover:bg-blue-700 "
             type="submit"
           >
-            送信
+            {locale.t.send}
           </button>
           <button
             type="reset"
             className="rounded border px-3 leading-7 hover:bg-slate-50"
           >
-            リセット
+            {locale.t.reset}
           </button>
         </div>
+        <div
+          className="cf-turnstile"
+          data-sitekey="0x4AAAAAAACTKjRsGDfe8G9p"
+          data-language={locale.locale}
+        />
         <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" />
       </form>
-      <p>個人情報を入力しないでください</p>
     </Layout>
   );
 }

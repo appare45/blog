@@ -6,18 +6,24 @@ interface headingProps {
   className?: ComponentClass;
 }
 
-export function Heading(props: React.PropsWithChildren<headingProps>) {
+export function Heading(
+  props: React.HTMLAttributes<headingProps> & { level: number }
+) {
   switch (props.level) {
     case 1:
       return (
-        <h1 className="font-sans text-4xl font-bold my-1 leading-10 tracking-tight">
+        <h1
+          className={`font-sans text-4xl font-bold my-1 leading-10 tracking-tight ${props.className}`}
+        >
           {props.children}
         </h1>
       );
 
     case 2:
       return (
-        <h2 className="font-sans text-3xl leading-10 my-1 font-bold tracking-tight">
+        <h2
+          className={`font-sans text-3xl leading-10 my-1 font-bold tracking-tight ${props.className}`}
+        >
           {props.children}
         </h2>
       );
