@@ -1,6 +1,5 @@
 import { repo } from "../lib/github";
 import { Date } from "./date";
-import { id } from "./layout";
 import { Link } from "./util";
 
 export function GitHubRepos({ data }: { data: repo[] }) {
