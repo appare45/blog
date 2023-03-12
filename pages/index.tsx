@@ -61,6 +61,13 @@ export default function Home({
             <li>
               <Link href="contact">Contact</Link>
             </li>
+            {locale != "ja" ?? (
+              <li>
+                <Link href="https://www.linkedin.com/in/appare45/">
+                  LinkedIn
+                </Link>
+              </li>
+            )}
           </ul>
         </section>
         {locale == "ja" ? (
