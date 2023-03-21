@@ -6,6 +6,8 @@ import Layout from "../../components/layout";
 import { Date } from "../../components/date";
 import { Heading, Link } from "../../components/util";
 import { Image } from "../../components/media";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 
 export default function Post({ postData }: { postData: postData }) {
   return (
@@ -18,6 +20,7 @@ export default function Post({ postData }: { postData: postData }) {
           </div>
         </section>
         <ReactMarkdown
+          remarkPlugins={[remarkGfm, remarkBreaks]}
           components={{
             h1({ children }) {
               return <Heading level={2}>{children}</Heading>;
