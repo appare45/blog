@@ -33,7 +33,7 @@ export default function Post({ postData }: { postData: postData }) {
                 return (
                   <Image
                     src={src}
-                    alt={alt}
+                    alt={alt ?? ""}
                     width={1920}
                     height={1080}
                     objectFit="scale-down"

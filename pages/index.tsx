@@ -86,13 +86,15 @@ export default function Home({
               <Heading level={2}>Tech Article</Heading>
               <PostsList allPostsData={zennArticles} />
             </section>
-            <section>
-              <Heading level={2}>Tweets</Heading>
-              <Tweets data={tweets} />
-              <Link href={"https://twitter.com/" + id} new_tab>
-                more on twitter→
-              </Link>
-            </section>
+            {tweets && (
+              <section>
+                 <Heading level={2}>Tweets</Heading>
+                <Tweets data={tweets} />
+                <Link href={"https://twitter.com/" + id} new_tab>
+                  more on twitter→
+                </Link>
+              </section>
+            )}
           </>
         ) : (
           <>

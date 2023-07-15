@@ -45,13 +45,13 @@ interface linkProps extends LinkProps {
 
 export function Link(props: React.PropsWithChildren<linkProps>) {
   return (
-    <NextLink prefetch={false} href={props.href}>
-      <a
-        className={`text-blue-700 hover:underline${props.className}`}
-        target={props.new_tab ? "_blank" : "_self"}
-      >
-        {props.children}
-      </a>
+    <NextLink
+      prefetch={false}
+      href={props.href}
+      className={`text-blue-700 hover:underline${props.className}`}
+      target={props.new_tab ? "_blank" : "_self"}
+    >
+      {props.children}
     </NextLink>
   );
 }
